@@ -1,5 +1,5 @@
 /*Example sketch to control a stepper motor with A4988 stepper motor driver, AccelStepper library and Arduino: number of steps or revolutions. More info: https://www.makerguides.com */
-
+// sempre tstando 
 // Include the AccelStepper library:
 #include <AccelStepper.h>
 #include <MultiStepper.h>
