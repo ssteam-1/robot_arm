@@ -1,9 +1,8 @@
-float jointToTransform01(float q[]){
-  float q1 = q[1];
-  float T_01[][4] = { {1, 0,        0,        0},
-                      {0, cos(q1),  sin(q1),  0},
-                      {0, -sin(q1), cos(q1),  0.036},
-                      {0, 0,        0,        1}};
-
-  return T_01;
+float jointToTransform01(){
+  
+  T_01[1][1] = cos(q1);
+  T_01[1][2] = sin(q1);
+  T_01[2][1] = -sin(q1);
+  T_01[2][2] = cos(q1);
+  
 }

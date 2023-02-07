@@ -10,7 +10,7 @@ void move_multyple_steppers(){
   steppers.runSpeedToPosition(); // Blocks until all are in position
   delay(3000);
   
-  positions[0] = -1500; //3.5 mm (1135/5 = 227)
+  positions[0] = -1500; 
   positions[1] = -1500;
   positions[2] = 1500;
   
