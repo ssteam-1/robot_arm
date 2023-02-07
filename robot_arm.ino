@@ -1,5 +1,5 @@
 /*Example sketch to control a stepper motor with A4988 stepper motor driver, AccelStepper library and Arduino: number of steps or revolutions. More info: https://www.makerguides.com */
-// sempre tstando 
+
 // Include the AccelStepper library:
 #include <AccelStepper.h>
 #include <MultiStepper.h>
@@ -92,7 +92,9 @@ void arm_setup(){
     }else if(current_stepper == 3){
       Serial.println("Moving elbow ...");
       run_stepper(elbow, steps, 250, 0);
-    }else{
+    }else if(current_stepper == 4){
+      move_multyple_steppers();
+    } else{
       Serial.println("Insert a valid number for the stepper.");
     } 
   }
