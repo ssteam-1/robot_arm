@@ -4,7 +4,11 @@ calculated (via inverse kinematics). The end-effector should reach the desired p
 
 #0 Organization:
   - how is the proper structure of a software folder?
-  - ...
+  - implement basic linear algebra operations
+    - matrix multiplication
+    - matrix inversion
+    - matrix pseudo-inversion
+    - ...
 
 #1 Task --> inverse kinematics
   - Compute homogeneous transformation matrices
