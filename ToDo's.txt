@@ -1,0 +1,14 @@
+# MAIN GOAL
+Via serial communication, giving an arm location (x, y, z coordinates in the fixed ground frame), the joint angles (q0, q1, q2) must be
+calculated (via inverse kinematics). The end-effector should reach the desired position.
+
+#0 Organization:
+  - how is the proper structure of a software folder?
+  - ...
+
+#1 Task --> inverse kinematics
+  - Compute homogeneous transformation matrices
+    - Managing matrices: how do we deal with them? (pointers)
+  - Compute Jacobian
+  - ...
+    
