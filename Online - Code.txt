@@ -1,0 +1,106 @@
+#include <BasicLinearAlgebra.h>
+
+using namespace BLA;
+
+float q[3];
+float q0 = q[0];
+float q1 = q[1];
+float q2 = q[2];
+
+BLA::Matrix <4,4> T_I0 = {cos(q0), -sin(q0), 0, 0,
+                          sin(q0), cos(q0) , 0, 0,
+                          0,       0,        1, 0.078,
+                          0,       0,        0, 1};
+
+BLA::Matrix <4,4> T_01 = {1, 0,        0,        0,
+                          0, cos(q1),  sin(q1),  0,
+                          0, -sin(q1), cos(q1),  0.036,
+                          0, 0,        0,        1};
+
+BLA::Matrix <4,4> T_12 = {1, 0,        0,        0,
+                          0, cos(q2),  sin(q2),  0,
+                          0, -sin(q2), cos(q2),  0.122,
+                          0, 0,        0,        1}; 
+
+BLA::Matrix <4,4> T_2E = {1, 0, 0, 0,
+                          0, 1, 0, 0,
+                          0, 0, 1, 0.109,
+                          0, 0, 0, 1};  
+
+BLA::Matrix <3,3> R_I0;
+BLA::Matrix <3,3> R_I1;
+BLA::Matrix <3,3> R_I2;                                            
+BLA::Matrix <3,3> R_IE;                                            
+
+void setup() {
+  Serial.begin(115200);
+  jointToPosJac();
+}
+
+void loop() {
+  
+
+}
+
+void print_matrix(BLA::Matrix <4,4> M, char matrix_name[]){
+  Serial << matrix_name << M << '\n';
+}
+void print_matrix_3(BLA::Matrix <3,3> M, char matrix_name[]){
+  Serial << matrix_name << M << '\n';
+}
+
+float jointToTransform01(){
+  
+  T_01(1, 1) = cos(q1);
+  T_01(1, 2) = sin(q1);
+  T_01(2, 1) = -sin(q1);
+  T_01(2, 2) = cos(q1);
+  
+}
+
+void jointToPosJac(){
+  BLA::Matrix <4,4> T_I1 = T_I0 * T_01;
+  BLA::Matrix <4,4> T_I2 = T_I1 * T_12;
+  BLA::Matrix <4,4> T_IE = T_I2 * T_2E;
+
+  extract_rot_matrix_I0();
+  extract_rot_matrix_I1();
+  extract_rot_matrix_I2();
+  extract_rot_matrix_IE();
+
+}
+
+void extract_rot_matrix_I0(){
+  for(int i=0; i<3; i++){
+    for(int j=0; j<3; j++){
+      R_I0(i, j) = T_I0(i, j);
+    }
+  }
+}
+
+void extract_rot_matrix_I1(){
+  for(int i=0; i<3; i++){
+    for(int j=0; j<3; j++){
+      R_I1(i, j) = T_I1(i, j);
+    }
+  }
+}
+
+void extract_rot_matrix_I2(){
+  for(int i=0; i<3; i++){
+    for(int j=0; j<3; j++){
+      R_I2(i, j) = T_I2(i, j);
+    }
+  }
+}
+
+void extract_rot_matrix_IE(){
+  for(int i=0; i<3; i++){
+    for(int j=0; j<3; j++){
+      R_IE(i, j) = T_IE(i, j);
+    }
+  }
+}
+
+
+

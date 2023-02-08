@@ -1,5 +1,8 @@
 #include <AccelStepper.h>
 #include <MultiStepper.h>
+#include <BasicLinearAlgebra.h>
+
+using namespace BLA;
 
 // Define stepper motor connections and motor interface type. Motor interface type must be set to 1 when using a driver:
 #define base_dirPin 2
