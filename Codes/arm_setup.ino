@@ -1,5 +1,5 @@
 void arm_setup(){
-  Serial.println("Which stepper would you like to move? 1: base, 2: shoulder, 3: elbow ");
+  /*Serial.println("Which stepper would you like to move? 1: base, 2: shoulder, 3: elbow ");
   delay(3000);
   while (Serial.available() == 0) {
   }
@@ -32,5 +32,5 @@ void arm_setup(){
     } else{
       Serial.println("Insert a valid number for the stepper.");
     } 
-  }
+  }*/
 }

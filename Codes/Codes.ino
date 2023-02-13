@@ -22,24 +22,38 @@ MultiStepper steppers;
 
 // ARM PARAMETERS
 // Generalized coordinates
-float q[3];
-float q0 = q[0];
-float q1 = q[1];
-float q2 = q[2];
+BLA::Matrix <3,1> q = {0, 3.14/2, 0};
+float q0 = q(0);
+float q1 = q(1);
+float q2 = q(2);
 
 // Homogeneous transformation matrices
-float T_I0[][4] = { {cos(q0), -sin(q0), 0, 0},
-                    {sin(q0), cos(q0) , 0, 0},
-                    {0,       0,        1, 0.078},
-                    {0,       0,        0, 1}};
-float T_01[][4] = { {1, 0,        0,        0},
-                    {0, cos(q1),  sin(q1),  0},
-                    {0, -sin(q1), cos(q1),  0.036},
-                    {0, 0,        0,        1}};
-float T_12[][4] = { {1, 0,        0,        0},
-                    {0, cos(q2),  sin(q2),  0},
-                    {0, -sin(q2), cos(q2),  0.122},
-                    {0, 0,        0,        1}};                    
+BLA::Matrix <4,4> T_I0 = {cos(q0), -sin(q0), 0, 0,
+                          sin(q0), cos(q0) , 0, 0,
+                          0,       0,        1, 0.078,
+                          0,       0,        0, 1};
+
+BLA::Matrix <4,4> T_01 = {1, 0,        0,        0,
+                          0, cos(q1),  sin(q1),  0,
+                          0, -sin(q1), cos(q1),  0.036,
+                          0, 0,        0,        1};
+
+BLA::Matrix <4,4> T_12 = {1, 0,        0,        0,
+                          0, cos(q2),  sin(q2),  0,
+                          0, -sin(q2), cos(q2),  0.122,
+                          0, 0,        0,        1};   
+
+BLA::Matrix <4,4> T_2E = {1, 0, 0, 0,
+                          0, 1, 0, 0,
+                          0, 0, 1, 0.109,
+                          0, 0, 0, 1};      
+
+BLA::Matrix <4,4> T_I1 = T_I0 * T_01;
+BLA::Matrix <4,4> T_I2 = T_I1 * T_12;
+BLA::Matrix <4,4> T_IE = T_12 * T_2E;     
+
+// End-effector position
+BLA::Matrix <3,1> I_r_IE;
 
 
 void setup() {
@@ -55,12 +69,17 @@ void setup() {
   steppers.addStepper(base);
   steppers.addStepper(shoulder);
   steppers.addStepper(elbow);
+
+  // Initialize end-effector position
+  jointToPosition();                                                           
+  
 }
 
 
 void loop() { 
-
-  arm_setup();
+  run_stepper(elbow, 3000, 500, 2500);
+  run_stepper(elbow, -3000, 500, 2500);
+  //arm_setup();
   //move_multyple_steppers();
   
 }
